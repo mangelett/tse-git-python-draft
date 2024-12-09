@@ -1,10 +1,23 @@
-# Que déclare t-on ici ?
-bibliotheque = {
-    "Le Petit Prince": "Antoine de Saint-Exupéry",
-    "1984": "George Orwell",
-    "Moby Dick": "Herman Melville",
-    "L'Étranger": "Albert Camus"
-}
+import csv
+
+# Fonction pour lire les livres depuis le fichier CSV
+def lire_bibliotheque():
+    bibliotheque = {}
+    with open('csv/bibliotheque.csv', mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            bibliotheque[row['Titre']] = row['Auteur']
+    return bibliotheque
+
+# Fonction pour écrire les emprunts dans le fichier CSV
+def ecrire_emprunts(emprunts):
+    with open('csv/emprunts.csv', mode='w', encoding='utf-8', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Titre', 'Auteur'])
+        writer.writerows(emprunts)
+
+# Initialiser la bibliothèque depuis le fichier CSV
+bibliotheque = lire_bibliotheque()
 
 # Que fait cette fonction ? Décrire son utilite et son fonctionnement.
 def afficher_bibliotheque():
@@ -25,6 +38,7 @@ def emprunter_livre():
             print(f"{titre} emprunté.")
         else:
             print("Ce livre n'est pas disponible. Veuillez réessayer.")
+    ecrire_emprunts(emprunts)
     return emprunts
 
 # Que fait cette fonction ? Décrire son utilite et son fonctionnement.

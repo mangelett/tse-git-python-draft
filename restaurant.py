@@ -1,10 +1,16 @@
-# Que déclare t-on ici ?
-menu = {
-    "Pizza": 10.0,
-    "Pâtes": 8.5,
-    "Salade": 7.0,
-    "Sushi": 12.0
-}
+import csv
+
+# Fonction pour lire le menu depuis le fichier CSV
+def lire_menu():
+    menu = {}
+    with open('csv/menu.csv', mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            menu[row['Plat']] = float(row['Prix'])
+    return menu
+
+# Initialiser le menu depuis le fichier CSV
+menu = lire_menu()
 
 # Que fait cette fonction ? Décrire son utilite et son fonctionnement.
 def afficher_menu():
